@@ -5,17 +5,26 @@ const app = Vue.createApp({
       product: 'Socks',
       brand: 'Vue Mastery',
       desc: 'A pair of warm socks',
-      image: './assets/images/socks_green.jpg',
+      selectedVariant: 0,
       url: 'https://www.youtube.com/',
       onSale: true,
       onSaleText: 'On Sale!',
-      inStock: false,
       inventory: 110,
       details: ['50% cotton', '30% wool', '20% polyester'],
-      sizes: [ 'small', 'medium', 'large'],
+      sizes: ['small', 'medium', 'large'],
       variants: [
-        { id: 1, color: 'green', image: './assets/images/socks_green.jpg' },
-        { id: 2, color: 'blue', image: './assets/images/socks_blue.jpg' },
+        {
+          id: 1,
+          color: 'green',
+          image: './assets/images/socks_green.jpg',
+          quantity: 50,
+        },
+        {
+          id: 2,
+          color: 'blue',
+          image: './assets/images/socks_blue.jpg',
+          quantity: 0,
+        },
       ],
     }
   },
@@ -28,13 +37,25 @@ const app = Vue.createApp({
         this.cart -= 1
       }
     },
-    updateImage(variantImage) {
-      this.image = variantImage
+    updateVariant(index) {
+      this.selectedVariant = index
     },
   },
   computed: {
     title() {
       return this.brand + ' ' + this.product
+    },
+    image() {
+      return this.variants[this.selectedVariant].image
+    },
+    inStock() {
+      return this.variants[this.selectedVariant].quantity
+    },
+    sale() {
+      if (this.onSale) {
+        return this.brand + ' ' + this.product + ' ' + this.onSaleText
+      }
+      return ''
     },
   },
 })
