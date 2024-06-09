@@ -7,7 +7,6 @@ const app = Vue.createApp({
       desc: 'A pair of warm socks',
       selectedVariant: 0,
       url: 'https://www.youtube.com/',
-      onSale: true,
       onSaleText: 'On Sale!',
       inventory: 110,
       details: ['50% cotton', '30% wool', '20% polyester'],
@@ -18,12 +17,14 @@ const app = Vue.createApp({
           color: 'green',
           image: './assets/images/socks_green.jpg',
           quantity: 50,
+          onSale: true,
         },
         {
           id: 2,
           color: 'blue',
           image: './assets/images/socks_blue.jpg',
           quantity: 0,
+          onSale: false,
         },
       ],
     }
@@ -52,8 +53,8 @@ const app = Vue.createApp({
       return this.variants[this.selectedVariant].quantity
     },
     sale() {
-      if (this.onSale) {
-        return this.brand + ' ' + this.product + ' ' + this.onSaleText
+      if (this.variants[this.selectedVariant].onSale) {
+        return 'Product' + ' ' + this.onSaleText
       }
       return ''
     },
